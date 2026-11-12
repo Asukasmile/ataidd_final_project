@@ -1,19 +1,11 @@
-# AIDD8122 期末项目：基于机器学习的分子对接打分函数改进
-
-Improving ML-based scoring functions for protein–ligand binding affinity prediction by combining RF-Score contact features with ligand descriptors.
-
-## 项目一句话
-
-证明「机器学习重打分模型」比传统物理打分函数（AutoDock Vina）更能准确预测蛋白-小分子结合亲和力；并进一步证明在 RF-Score 的 36 维接触特征基础上加入 12 维配体描述子，可将 Pearson 从 0.764 提升到 0.799（在排除训练/评测集重叠、无数据泄漏的严格评测下）。
-
 ## 环境
 
 依赖：`rdkit`、`xgboost`、`scikit-learn`、`scipy`、`pandas`、`numpy`、`matplotlib`
 
 ```bash
 # 建议用 conda 创建独立环境
-conda create -n chem_rdkit python=3.11 -y
-conda activate chem_rdkit
+conda create -n ataidd python=3.11 -y
+conda activate ataidd
 conda install -c conda-forge rdkit xgboost scikit-learn scipy pandas numpy matplotlib -y
 ```
 
@@ -51,7 +43,7 @@ data set/
 文件：`final_project.ipynb`
 
 - 用 **VS Code** 打开 `final_project.ipynb`；
-- 右上角内核选择 `chem_rdkit`（或 `Python 3.13 (chem_rdkit)`）；
+- 右上角内核选择 `ataidd`（或 `Python 3.13 (ataidd)`）；
 - 从上到下依次点每个 cell 的运行按钮即可。
 
 > Notebook 已把所有脚本整合为 19 个 cell（含说明文字），每步结果会内联显示，方便逐步查看和答辩演示。
@@ -75,8 +67,8 @@ data set/
 ### 一键跑通全流程（按顺序执行）：
 
 ```bash
-# 用 chem_rdkit 环境的 python（项目根目录下执行）
-PY="C:/Users/xinji/anaconda3/envs/chem_rdkit/python.exe"
+# 用 ataidd 环境的 python（项目根目录下执行）
+PY="/your/path/to/python.exe"
 "$PY" src/parse_labels.py
 "$PY" src/extract_features.py
 "$PY" src/baseline_rfscore.py
@@ -132,15 +124,6 @@ PY="C:/Users/xinji/anaconda3/envs/chem_rdkit/python.exe"
 >
 > ⚠️ 说明：这些结果是在**排除训练/评测集重叠后**得到的（无数据泄漏的严格评测）。
 > 若不做泄漏剔除，Pearson 会被高估到约 0.939；本仓库所有结果均为剔除后的真实值。
-
-## 可能遇到的问题
-
-1. **XGBoost 仍略低于 RF-Score**：正常。可尝试：
-   - 调 XGBoost 超参（max_depth 4~10、learning_rate 0.01~0.1）
-   - 增加更多描述子（rdMolDescriptors 里有 200+ 个）
-   - 换 LightGBM / 简单 MLP
-2. **特征提取报错**：已在 `extract_features.py` 做了元素解析容错 + 单样本异常保护，单个复合物失败会跳过并在末尾打印。
-3. **为什么结果和 RF-Score 原论文不同**：因为本仓库在训练前**剔除了与 CASF-2016 重叠的 266 个复合物**（无泄漏评测），所以 Pearson 约为 0.76–0.80；若沿用 CASF 传统的"允许训练集包含 core set"协议，Pearson 会更高（约 0.94），但那包含了数据泄漏。
 
 ## 项目结构
 
