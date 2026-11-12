@@ -1,0 +1,48 @@
+# === 数据（PDBbind / CASF 原始数据，体积巨大，不纳入版本控制）===
+data set/
+
+# === 报告与演示文件（个人提交材料，可自行决定是否上传）===
+*.pdf
+*.docx
+*.pptx
+~$*
+
+# === Figure 1 作图过程的中间素材（图标、tif 等，非项目核心源码）===
+picture/
+
+# === 答辩 PPT 及作图素材（个人演示材料，非项目核心源码）===
+PPT/
+
+# === 早期选题调研笔记（与最终项目无关）===
+调研-*.md
+
+# === 备份与临时文件 ===
+*_backup.docx
+*.bak
+*.tmp
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+.ipynb_checkpoints/
+
+# === 环境 / 虚拟环境 ===
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# === IDE / 编辑器 ===
+.vscode/
+.idea/
+*.swp
+
+# === 系统文件 ===
+.DS_Store
+Thumbs.db
+
+# === WorkBuddy 本地记忆（个人工作日志，不上传）===
+.workbuddy/
